@@ -96,14 +96,14 @@ test-5-empty-stream contains an empty stream_payment file and tests if the progr
 Repository Contents:
 
 ├──LiWallet
-├── readme.md
-├── run.sh
-├── src
-	└──FraudUserStat.java
-	└──User.Java
-	└──jgrapht-core-1.0.0.jar
-	└──FraudProcess.java
-├── paymo_input
+	├── README.md 
+	├── run.sh
+	├── src
+	│  	└── FraudUserStat.java
+	│  	└── User.java
+	│  	└── jgrapht-core-1.0.0.jar
+	│  	└── FraudProcess.java	
+	├── paymo_input
 	│   └── batch_payment.txt
 	|   └── stream_payment.txt
 	├── paymo_output
@@ -121,6 +121,14 @@ Repository Contents:
         		│       └── output1.txt
         		│       └── output2.txt
         		│       └── output3.txt
+        		└── your-own-test
+            		 ├── paymo_input
+        		     │   └── batch_payment.txt
+        		     │   └── stream_payment.txt
+        		     └── paymo_output
+        		         └── output1.txt
+        		         └── output2.txt
+        		         └── output3.txt
         		└── test-2-7-degree
             		 ├── paymo_input
         		     │   └── batch_payment.txt
