@@ -1,0 +1,10 @@
+t,t,t,t,t
+2016-11-02 11:29:52, 21302, 6667779988420, 41.41, Coffee 
+2016-11-02 11:29:52, barfoo, 21302, 23.79, Safeway 
+2016-11-02 11:29:52, somethinghere, nothinghere, 23.79, Safeway 
+2016-11-02 12:00:14, 71691, 8297, 34.63, Converse 😋👟 
+2016-11-02 12:00:14, 57693, 1009, 21.56, $1,000 
+2016-11-02 12:00:14, 20288, 762, 12.17, BABYLON’S FALLING
+    Pure city, Babylon’s falling to rise no more Oh, Babylon’s falling, falling, falling Babylon’s falling to rise no more.  Oh, Jesus, tell you once before, Babylon’s falling to rise no more To go in peace an’ sin no more Babylon’s falling to rise no more  If you get there before I do Babylon’s falling to rise no more Tell all my friends I’m coming too 
+2016-11-02 12:00:14, 17820, 17827, 24.52, Night filled with glass and class 
+2016-11-02 12:00:14, 41643, 5090, 2.91, 🍣 
