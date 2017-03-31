@@ -10,9 +10,9 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-import org.jgrapht.*;
-import org.jgrapht.alg.DijkstraShortestPath;
-import org.jgrapht.graph.*;
+//import org.jgrapht.*;
+//import org.jgrapht.alg.DijkstraShortestPath;
+//import org.jgrapht.graph.*;
 
 import java.lang.String;
 
@@ -20,37 +20,40 @@ public class FraudProcess {
 
 	// graph of users
 	// pseudograph allows for more than 1 edge per vertex
-	private static UndirectedGraph<String, DefaultEdge> userGraph = new Pseudograph<String,DefaultEdge>(DefaultEdge.class);
-	private static UndirectedGraph<String, DefaultEdge> userGraphBackup = new Pseudograph<String,DefaultEdge>(DefaultEdge.class);
+//	private static UndirectedGraph<String, DefaultEdge> userGraph = new Pseudograph<String,DefaultEdge>(DefaultEdge.class);
+//	private static UndirectedGraph<String, DefaultEdge> userGraphBackup = new Pseudograph<String,DefaultEdge>(DefaultEdge.class);
 	// args[0] = "batch_payment.csv" args[1] = "stream_payment.csv"
+
+	private static HashMap<String, HashSet<String>> userGraph = new HashMap<>();
+	private static HashMap<String, HashSet<String>> userGraphBackup = new HashMap<>();
 	public static void main(String[] args){
 
-		String batch_payment = args[0];
-		String stream_payment = args[1];
-		//int maxDistance = args[3];
-		System.out.println("Building user graph....");
-		buildUserGraph(batch_payment);
-		System.out.println("Done");
-		System.out.println("Checking for fraud...");
-		long startFraud = System.currentTimeMillis();
-		try{
-			// feature 1 check if 1 degree of separation between payer and 
-			System.out.println(" test 1");
-			checkFraud(stream_payment, "paymo_output/output1.txt",1);
-			// feature 2 check if <=2 degree of separation between payer and recipient
-			resetUserGraph();
-			System.out.println(" test 2");
-			checkFraud(stream_payment, "paymo_output/output2.txt",2);
-			// feature 3 check if <=4 degree of separation between payer and recipient
-			resetUserGraph();
-			System.out.println(" test 3");
-			checkFraud(stream_payment, "paymo_output/output3.txt",4);
-		}
-		catch (IOException e3) {
-			e3.printStackTrace();
-		}
-		long endFraud = System.currentTimeMillis();
-		System.out.println("done" + " " + (endFraud - startFraud));
+//		String batch_payment = args[0];
+//		String stream_payment = args[1];
+//		//int maxDistance = args[3];
+//		System.out.println("Building user graph....");
+//		buildUserGraph(batch_payment);
+//		System.out.println("Done");
+//		System.out.println("Checking for fraud...");
+//		long startFraud = System.currentTimeMillis();
+//		try{
+//			// feature 1 check if 1 degree of separation between payer and
+//			System.out.println(" test 1");
+//			checkFraud(stream_payment, "paymo_output/output1.txt",1);
+//			// feature 2 check if <=2 degree of separation between payer and recipient
+//			resetUserGraph();
+//			System.out.println(" test 2");
+//			checkFraud(stream_payment, "paymo_output/output2.txt",2);
+//			// feature 3 check if <=4 degree of separation between payer and recipient
+//			resetUserGraph();
+//			System.out.println(" test 3");
+//			checkFraud(stream_payment, "paymo_output/output3.txt",4);
+//		}
+//		catch (IOException e3) {
+//			e3.printStackTrace();
+//		}
+//		long endFraud = System.currentTimeMillis();
+//		System.out.println("done" + " " + (endFraud - startFraud));
 	}
 
 
@@ -79,11 +82,13 @@ public class FraudProcess {
 				// add connection between payer and recipient
 				addEdgeToGraph(payer, recipient);
 				//System.out.println(transaction);
+
+
 			}
 
 		}
 		scan.close();
-		Graphs.addGraph(userGraphBackup, userGraph);
+		userGraphBackup = new HashMap<>(userGraph);
 	}
 
 	// read in stream_payment.csv
@@ -129,37 +134,40 @@ public class FraudProcess {
 	// returns +infinity if payer or recipient are not connected
 	// payer and recipient may not be in graph add them to graph
 	private static double getLength(String payer, String recipient, int maxDistance){
-		double theLength=Double.POSITIVE_INFINITY;
-		try{
-			DijkstraShortestPath<String,DefaultEdge> pathLength = new DijkstraShortestPath<String, DefaultEdge>(userGraph,payer,recipient,maxDistance);
-			theLength = pathLength.getPathLength();
-			addEdgeToGraph(payer,recipient);
-		}
-		catch (IllegalArgumentException e2){
-			//System.out.println("New edge detected");
-			// no connection between payer and recipient
-			// or either payer or recipient not in graph
-			if (!userGraph.containsVertex(payer)){
-				addUserToGraph(payer);
-			}
-			if (!userGraph.containsVertex(recipient)){
-				addUserToGraph(recipient);
-			}
-			addEdgeToGraph(payer,recipient);
-			//DijkstraShortestPath<String,DefaultEdge> pathLength = new DijkstraShortestPath<String, DefaultEdge>(userGraph,payer,recipient,4);
-			//theLength = Double.POSITIVE_INFINITY;
-		}
-		return theLength;
+//		double theLength=Double.POSITIVE_INFINITY;
+//		try{
+//			DijkstraShortestPath<String,DefaultEdge> pathLength = new DijkstraShortestPath<String, DefaultEdge>(userGraph,payer,recipient,maxDistance);
+//			theLength = pathLength.getPathLength();
+//			addEdgeToGraph(payer,recipient);
+//		}
+//		catch (IllegalArgumentException e2){
+//			//System.out.println("New edge detected");
+//			// no connection between payer and recipient
+//			// or either payer or recipient not in graph
+//			if (!userGraph.containsVertex(payer)){
+//				addUserToGraph(payer);
+//			}
+//			if (!userGraph.containsVertex(recipient)){
+//				addUserToGraph(recipient);
+//			}
+//			addEdgeToGraph(payer,recipient);
+//			//DijkstraShortestPath<String,DefaultEdge> pathLength = new DijkstraShortestPath<String, DefaultEdge>(userGraph,payer,recipient,4);
+//			//theLength = Double.POSITIVE_INFINITY;
+//		}
+//		return theLength;
+		return 0;
 	}
 
 	// add a user id to the userGraph
 	private static void addUserToGraph(String id){
-		userGraph.addVertex(id);
+		if(!userGraph.containsKey(id)){
+			userGraph.put(id, new HashSet<String>());
+		}
 	}
 
 	// add id1 (payer) and id2 (recipient) edge to graph
 	private static void addEdgeToGraph(String id1, String id2){
-		userGraph.addEdge(id1,id2);
+		userGraph.get(id1).add(id2);
 	}
 
 	// load a csv and make a scanner to read its contents
@@ -206,10 +214,7 @@ public class FraudProcess {
 	
 	// reset userGraph to the state it was in when batch_payment finished reading in
 	// to prepare for next test
-	// this is done by dereferencing the old user graph and assigning the nodes and edges
-	// from the backup graph to userGraph
 	private static void resetUserGraph(){
-		userGraph = new Pseudograph<String,DefaultEdge>(DefaultEdge.class);
-		Graphs.addGraph(userGraph,userGraphBackup);
+		userGraph = new HashMap<>(userGraphBackup);
 	}
 }
